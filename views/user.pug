@@ -1,0 +1,59 @@
+extends layout
+
+block content
+  br
+  .w3-container
+    .w3-card-4.w3-center(style="padding: 15px;")
+      img(src=user.picture)
+      p Welcome #{user.nickname}
+      div
+        button(id="check-session") Check Session
+        button(id="get-profile") Get Profile
+        button(id="get-contacts") List Contacts
+        button(id="get-appointments") List Appointments
+        div(id="results")
+          pre
+  script.
+
+    $('#check-session').on('click', function(e) {
+      e.preventDefault();
+      window.location = "http://app1.com:3000/api/session";
+    });
+
+    setInterval(function() {
+      // periodically check for SSO status
+      checkSession();
+    }, 120000);
+
+    $('#get-profile').on('click', function(e) {
+      e.preventDefault();
+      $.ajax({
+        url: "http://app1.com:3000/api/userinfo",
+        method: "GET",
+        success: function (data) {
+          $('#results pre').text(JSON.stringify(data, null, 2))
+        }
+      });
+    });
+
+    $('#get-appointments').on('click', function(e) {
+      e.preventDefault();
+      $.ajax({
+        url: "http://app1.com:3000/api/appointments",
+        method: "GET",
+        success: function (data) {
+          $('#results pre').text(JSON.stringify(data, null, 2))
+        }
+      });
+    });
+
+    $('#get-contacts').on('click', function(e) {
+      e.preventDefault();
+      $.ajax({
+        url: "http://app1.com:3000/api/contacts",
+        method: "GET",
+        success: function (data) {
+          $('#results pre').text(JSON.stringify(data, null, 2))
+        }
+      });
+    });
