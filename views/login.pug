@@ -6,16 +6,17 @@ block content
   script.
     var lock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}',
       {
+        oidcConformant: true,
         autoclose: true,
         closable: false,
         auth: {
           redirect: true,
           redirectUrl: '#{env.AUTH0_CALLBACK_URL}',
           responseType: 'code',
+          audience: '#{env.AUDIENCE}',
           sso: true,
           params: {
             scope: '#{env.SCOPE}',
-            audience: '#{env.AUDIENCE}'
           }
         }
       });
