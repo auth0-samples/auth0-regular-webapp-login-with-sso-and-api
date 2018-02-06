@@ -4,20 +4,15 @@ block content
   div(id="root" style="width: 280px; margin: 40px auto; padding: 10px;")
 
   script.
-    var lock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}',
-      {
-        oidcConformant: true,
-        autoclose: true,
-        closable: false,
-        auth: {
-          redirect: true,
-          redirectUrl: '#{env.AUTH0_CALLBACK_URL}',
-          responseType: 'code',
-          audience: '#{env.AUDIENCE}',
-          sso: true,
-          params: {
-            scope: '#{env.SCOPE}',
-          }
-        }
-      });
-    lock.show();
+    var lock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}');
+       lock.show({
+         oidcConformant: true,
+         container: 'root',
+         popup: false,
+         responseType: 'code',
+         callbackURL: '#{env.AUTH0_CALLBACK_URL}',
+         sso: true,
+         authParams: {
+           scope: '#{env.SCOPE}'
+         }
+       });

@@ -45,9 +45,6 @@ Client-Type: Regular Web Application
 Allowed Callback URLs:
  - http://app1.com:3000/callback
 
-Allowed Web Origins:
- - http://app1.com:3000
-
 Allowed Logout URLs
  - http://app1.com:3000
 
@@ -55,6 +52,8 @@ Under tenant settings -> advanced -> Allowed Logout URLs
  - http://app1.com:3000
 
 Under Advanced Settings -> Oauth, switch ON the OIDC Conformant toggle.
+
+Please note for Lock 9 - the OIDC Conformant flag must be disabled.
 
 
 ### Locally
