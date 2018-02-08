@@ -1,0 +1,79 @@
+extends layout
+
+block content
+  div(id="root" style="width: 280px; margin: 40px auto; padding: 10px;")
+
+
+  #embedded-verify-customui.container(style="display:none;")
+    .form-signin
+      h2.form-signin-heading Enter Code
+      label.sr-only(for='code') Code
+      input#mobile.form-control(type='code', placeholder='code', required='', autofocus='')
+      button#signin-passwordless-verify.btn.btn-lg.btn-primary.btn-block Sign in
+
+
+  #embedded-login-customui.container
+    .form-signin
+      h2.form-signin-heading Passwordless Email
+      label.sr-only(for='email') Email address
+      input#email.form-control(type='email', placeholder='Email address', required='', autofocus='')
+      button#signin-passwordless-email.btn.btn-lg.btn-primary.btn-block Sign in
+
+    h3 or
+
+    .form-signin
+      h2.form-signin-heading Passwordless SMS
+      label.sr-only(for='mobile') Mobile Number
+      input#mobile.form-control(type='mobile', placeholder='mobile', required='', autofocus='')
+      button#signin-passwordless-mobile.btn.btn-lg.btn-primary.btn-block Sign in
+
+  script.
+    $(function () {
+      $('#signin-passwordless-verify').on('click', function (e) {
+        e.preventDefault();
+        alert("Verify called");
+      });
+
+      $('#signin-passwordless-email').on('click', function (e) {
+        e.preventDefault();
+        var webAuthPasswordless = new auth0.WebAuth({
+          domain: '#{env.AUTH0_DOMAIN}',
+          redirectUri: '#{env.AUTH0_CALLBACK_URL}',
+          clientID: '#{env.AUTH0_CLIENT_ID}',
+          responseType: 'code'
+        });
+        webAuthPasswordless.passwordlessStart({
+          connection: 'email',
+          email: $('#email').val(),
+          send: 'code'
+        }, function (err, res) {
+          if (err) {
+            alert("Something went wrong with passwordless email");
+            return;
+          }
+          $('#embedded-login-customui').hide();
+          $('#embedded-verify-customui').show();
+        });
+      });
+      $('#signin-passwordless-mobile').on('click', function (e) {
+        e.preventDefault();
+        var webAuthPasswordless = new auth0.WebAuth({
+          domain: '#{env.AUTH0_DOMAIN}',
+          redirectUri: '#{env.AUTH0_CALLBACK_URL}',
+          clientID: '#{env.AUTH0_CLIENT_ID}',
+          responseType: 'code'
+        });
+        webAuthPasswordless.passwordlessStart({
+          connection: 'sms',
+          phone_number: $('#mobile').val(),
+          send: 'code'
+        }, function (err, res) {
+          if (err) {
+            alert("Something went wrong with passwordless email");
+            return;
+          }
+          $('#embedded-login-customui').hide();
+          $('#embedded-verify-customui').show();
+        });
+      });
+    });

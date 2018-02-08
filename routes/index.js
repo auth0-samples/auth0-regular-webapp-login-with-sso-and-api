@@ -8,6 +8,17 @@ router.get('/', function (req, res, next) {
   res.render('index');
 });
 
+router.get('/plogin', function (req, res) {
+  const env = {
+    AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
+    AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
+    AUTH0_CALLBACK_URL: process.env.AUTH0_CALLBACK_URL || 'http://app1.com:3000/callback',
+    AUDIENCE: process.env.AUDIENCE || 'https://#{env.AUTH0_DOMAIN}/userinfo',
+    SCOPE: process.env.SCOPE
+  };
+  res.render('plogin', { env: env });
+});
+
 router.get('/elogin', function (req, res) {
   const env = {
     AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
