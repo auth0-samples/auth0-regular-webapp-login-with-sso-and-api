@@ -2,7 +2,6 @@ var querystring = require('querystring');
 var https = require('https');
 
 var host = 'haveibeenpwned.com';
-var response;
 
 function performRequest(endpoint, method, data, success) {
   var dataString = JSON.stringify(data);
@@ -46,4 +45,16 @@ function performRequest(endpoint, method, data, success) {
   req.end();
 }
 
-module.exports = performRequest;
+//module.exports = performRequest;
+
+module.exports = performRequest(
+  '/api/v2/breachedaccount/test@test.com',
+  'GET',
+  {
+    truncateResponse: true
+  },
+  function(data)
+  {
+   console.log(data);
+  }
+);

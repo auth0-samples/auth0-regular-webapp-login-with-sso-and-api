@@ -3,7 +3,7 @@ const app = express();
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
 const cors = require('cors');
-const requests = require('./utils/requests');
+const performRequest = require('./utils/requests');
 
 require('dotenv').config();
 
@@ -49,7 +49,9 @@ const checkPermissions = function (req, res, next) {
 app.use(checkPermissions);
 
 app.get('/api/check_hack', function (req, res) {
-  res.send(req.user);
+  res.setHeader('Content-Type', 'application/json');
+  //res.send(requests('/api/v2/breachedaccount/', 'GET', 'email', function(data) {console.log(data.result)}));
+  res.send(performRequest);
 });
 
 app.listen(port, function () {
