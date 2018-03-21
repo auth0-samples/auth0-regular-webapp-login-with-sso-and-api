@@ -23,7 +23,7 @@ app.use(jwt({
   }),
 
   // Validate the audience and the issuer
-  audience: 'organise',
+  audience: 'jwlm_services',
   issuer: `https://${domain}/`,
   algorithms: [ 'RS256' ]
 }));
