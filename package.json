@@ -6,7 +6,7 @@
   "author": "Auth0",
   "license": "MIT",
   "scripts": {
-    "start": "node contacts-api.js | node calendar-api.js | node ./bin/www",
+    "start": "node check-hack.js | node contacts-api.js | node calendar-api.js | node ./bin/www",
     "start_apis_only": "node contacts-api.js | node calendar-api.js"
   },
   "dependencies": {
@@ -27,6 +27,7 @@
     "passport": "^0.3.0",
     "passport-auth0": "^0.6.0",
     "pug": "~2.0.0-beta11",
+    "restler": "^3.4.0",
     "serve-favicon": "^2.4.0",
     "uuid": "^3.1.0"
   }

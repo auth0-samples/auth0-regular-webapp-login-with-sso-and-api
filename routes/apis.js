@@ -41,4 +41,9 @@ router.get('/contacts', ensureLoggedIn('/auth'), ensureTokenValid, function (req
   handleDelivery(res, url, req.session.access_token);
 });
 
+router.get('/check_hack', ensureLoggedIn('/auth'), ensureTokenValid, function (req, res, next) {
+  const url = `http://localhost:${process.env.CHECK_HACK_API_PORT}/api/check_hack`;
+  handleDelivery(res, url, req.session.access_token);
+});
+
 module.exports = router;

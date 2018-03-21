@@ -11,6 +11,7 @@ block content
         button(id="get-profile") Get Profile
         button(id="get-contacts") List Contacts
         button(id="get-appointments") List Appointments
+        button(id="check-hack") Check Hack
         div(id="results")
           pre
   script.
@@ -51,6 +52,17 @@ block content
       e.preventDefault();
       $.ajax({
         url: "http://jwlm.com:3000/api/contacts",
+        method: "GET",
+        success: function (data) {
+          $('#results pre').text(JSON.stringify(data, null, 2))
+        }
+      });
+    });
+
+    $('#check-hack').on('click', function(e) {
+      e.preventDefault();
+      $.ajax({
+        url: "http://jwlm.com:3000/api/check_hack",
         method: "GET",
         success: function (data) {
           $('#results pre').text(JSON.stringify(data, null, 2))
