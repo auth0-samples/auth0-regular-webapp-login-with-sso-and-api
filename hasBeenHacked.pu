@@ -28,22 +28,23 @@ Auth0 -> Auth0_DB: Validate Credentials
 alt successful case
 
 Auth0_DB -> Auth0: Credentials OK!
-Auth0 -> Browser: successful: Callback
+Auth0 -> Browser: host/callback
 deactivate Auth0
-Browser -> ClientWebApp: Callback
+Browser -> ClientWebApp: host/callback
 activate ClientWebApp
 ClientWebApp -> Browser: Signed In UI
 User -> Browser: Click 'Check Hack'
 Browser -> ClientWebApp: check-hack()
 ClientWebApp -> HaveIBeenPwned: api/breachedaccounts/#req.user.emails
 activate HaveIBeenPwned
-HaveIBeenPwned -> ClientWebApp: response: 200/304, JSON{breachedaccounts}
+HaveIBeenPwned -> HaveIBeenPwned: lookup(req.user.emails)
+HaveIBeenPwned -> ClientWebApp: response: 200/304\nJSON{breachedaccounts}
 deactivate HaveIBeenPwned
 ClientWebApp -> Browser: JSON{breachedaccounts}
 ClientWebApp -> ClientWebApp: hasBeenHacked-api
-ClientWebApp -> Auth0: /api/v2/users/:id {app_metadata:{hasBeenHacked:boolean}}
+ClientWebApp -> Auth0: /api/v2/users/:id\n{app_metadata:{hasBeenHacked:boolean}}
 activate Auth0
-Auth0 -> ClientWebApp: response: 200, JSON{userprofile}
+Auth0 -> ClientWebApp: response: 200\nJSON{userprofile}
 Auth0 -> Auth0_DB: store {app_metadata:{hasBeenHacked:boolean}}
 Auth0_DB -> Auth0_DB: stored
 deactivate ClientWebApp
