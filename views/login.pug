@@ -6,8 +6,20 @@ block content
   script.
     var lock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}',
       {
+        theme: {
+        logo: 'http://icons.iconarchive.com/icons/sonya/swarm/256/Cat-icon.png',
+        primaryColor: '#f44289'
+        },
+        languageDictionary: {
+        lastLoginInstructions: 'Last time you Signed In with',
+        loginLabel: 'Sign In',
+        loginSubmitLabel: 'Sign In',
+        loginWithLabel: 'Sign In with %s',
+        mfaSubmitLabel: 'Sign In'
+        },
         autoclose: true,
         closable: false,
+        socialButtonStyle: 'small',
         auth: {
           redirect: true,
           redirectUrl: '#{env.AUTH0_CALLBACK_URL}',

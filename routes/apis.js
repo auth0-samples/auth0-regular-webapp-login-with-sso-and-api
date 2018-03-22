@@ -22,7 +22,7 @@ const handleDelivery = (res, url, accessToken) => {
   });
 };
 
-const handleDelivery2 = (res, url, accessToken) => {
+const handleOutboundDelivery = (res, url, accessToken) => {
   const options = {
     url: url,
     json: true,
@@ -36,10 +36,10 @@ const handleDelivery2 = (res, url, accessToken) => {
       return res.json({ error: true, description: 'Check server logs & whether API Ports already in use' });
     }
     else if (body === undefined) {
-      return res.json({description: 'Your account has not been hacked!' });
+      return res.json({numberOfAccountHacked: '0', Awesome: 'Your email username appears to have not been hacked in past!' });
     }
     else {
-    return res.json(body);
+    return res.json({numberOfAccountHacked: body.length, recommendation: 'Reset your password!', accountsHacked: body});
   }
   });
 };
@@ -63,11 +63,14 @@ router.get('/contacts', ensureLoggedIn('/auth'), ensureTokenValid, function (req
   handleDelivery(res, url, req.session.access_token);
 });
 
-
+router.get('/hasBeenHacked', ensureLoggedIn('/auth'), ensureTokenValid, function (req, res, next) {
+  const url = `http://localhost:${process.env.HAS_BEEN_HACKED_API_PORT}/api/hasBeenHacked`;
+  handleDelivery(res, url, req.session.access_token);
+});
 
 router.get('/check_hack', ensureLoggedIn('/auth'), ensureTokenValid, function (req, res, next) {
-  const url = `https://haveibeenpwned.com/api/v2/breachedaccount/` + req.user.displayName;
-  handleDelivery2(res, url, req.session.access_token);
+  const url = `https://haveibeenpwned.com/api/v2/breachedaccount/` + req.user.displayName + '?truncateResponse=true';
+  handleOutboundDelivery(res, url, req.session.access_token);
 });
 
 module.exports = router;

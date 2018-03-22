@@ -12,6 +12,7 @@ block content
         button(id="get-contacts") List Contacts
         button(id="get-appointments") List Appointments
         button(id="check-hack") Check Hack
+        button(id="am-i-secure") Am I Secure?
         div(id="results")
           pre
   script.
@@ -63,6 +64,17 @@ block content
       e.preventDefault();
       $.ajax({
         url: "http://jwlm.com:3000/api/check_hack",
+        method: "GET",
+        success: function (data) {
+          $('#results pre').text(JSON.stringify(data, null, 2))
+        }
+      });
+    });
+    
+    $('#am-i-secure').on('click', function(e) {
+      e.preventDefault();
+      $.ajax({
+        url: "http://jwlm.com:3000/api/hasBeenHacked",
         method: "GET",
         success: function (data) {
           $('#results pre').text(JSON.stringify(data, null, 2))
