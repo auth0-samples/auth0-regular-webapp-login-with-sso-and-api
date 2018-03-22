@@ -19,7 +19,7 @@ block content
 
     $('#check-session').on('click', function(e) {
       e.preventDefault();
-      window.location = "http://jwlm.com:3000/api/session";
+      window.location = "#{process.env.HOST}:3000/api/session";
     });
 
     setInterval(function() {
@@ -30,7 +30,7 @@ block content
     $('#get-profile').on('click', function(e) {
       e.preventDefault();
       $.ajax({
-        url: "http://jwlm.com:3000/api/userinfo",
+        url: "#{process.env.HOST}:3000/api/userinfo",
         method: "GET",
         success: function (data) {
           $('#results pre').text(JSON.stringify(data, null, 2))
@@ -41,7 +41,7 @@ block content
     $('#get-appointments').on('click', function(e) {
       e.preventDefault();
       $.ajax({
-        url: "http://jwlm.com:3000/api/appointments",
+        url: "#{process.env.HOST}:3000/api/appointments",
         method: "GET",
         success: function (data) {
           $('#results pre').text(JSON.stringify(data, null, 2))
@@ -52,7 +52,7 @@ block content
     $('#get-contacts').on('click', function(e) {
       e.preventDefault();
       $.ajax({
-        url: "http://jwlm.com:3000/api/contacts",
+        url: "#{process.env.HOST}:3000/api/contacts",
         method: "GET",
         success: function (data) {
           $('#results pre').text(JSON.stringify(data, null, 2))
@@ -63,7 +63,7 @@ block content
     $('#check-hack').on('click', function(e) {
       e.preventDefault();
       $.ajax({
-        url: "http://jwlm.com:3000/api/check_hack",
+        url: "#{process.env.HOST}:3000/api/check_hack",
         method: "GET",
         success: function (data) {
           $('#results pre').text(JSON.stringify(data, null, 2))
@@ -74,7 +74,7 @@ block content
     $('#am-i-secure').on('click', function(e) {
       e.preventDefault();
       $.ajax({
-        url: "http://jwlm.com:3000/api/hasBeenHacked",
+        url: "#{process.env.HOST}:3000/api/hasBeenHacked",
         method: "GET",
         success: function (data) {
           $('#results pre').text(JSON.stringify(data, null, 2))
