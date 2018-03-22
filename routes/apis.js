@@ -22,6 +22,28 @@ const handleDelivery = (res, url, accessToken) => {
   });
 };
 
+const handleDelivery2 = (res, url, accessToken) => {
+  const options = {
+    url: url,
+    json: true,
+    headers: {
+      'User-Agent': `jwlm-check-hack-tool`
+    }
+  };
+  request(options, function (error, response, body) {
+    if (error) {
+      console.error(error);
+      return res.json({ error: true, description: 'Check server logs & whether API Ports already in use' });
+    }
+    else if (body === undefined) {
+      return res.json({description: 'Your account has not been hacked!' });
+    }
+    else {
+    return res.json(body);
+  }
+  });
+};
+
 router.get('/session', ensureLoggedIn('/auth'), ensureTokenValid, function (req, res, next) {
   authorize(req, res, true);
 });
@@ -41,9 +63,11 @@ router.get('/contacts', ensureLoggedIn('/auth'), ensureTokenValid, function (req
   handleDelivery(res, url, req.session.access_token);
 });
 
+
+
 router.get('/check_hack', ensureLoggedIn('/auth'), ensureTokenValid, function (req, res, next) {
-  const url = `http://localhost:${process.env.CHECK_HACK_API_PORT}/api/check_hack`;
-  handleDelivery(res, url, req.session.access_token);
+  const url = `https://haveibeenpwned.com/api/v2/breachedaccount/` + req.user.displayName;
+  handleDelivery2(res, url, req.session.access_token);
 });
 
 module.exports = router;
