@@ -7,7 +7,8 @@ const cors = require('cors');
 require('dotenv').config();
 
 //const port = 3003;
-const port = process.env.PORT;
+const host = '0.0.0.0'
+const port = process.env.PORT || 3003;
 const domain = process.env.AUTH0_DOMAIN;
 
 app.use(cors());
@@ -53,6 +54,6 @@ app.get('/api/hasBeenHacked', function (req, res) {
   res.send({hasBeenHacked: 'service is ON', scopes: req.user.scope});
 });
 
-app.listen(port, function () {
+app.listen(port, host, function () {
   console.log('hasBeenHacked API started on port: ' + port);
 });
