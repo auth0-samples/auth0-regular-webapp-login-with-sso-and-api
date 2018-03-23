@@ -6,7 +6,7 @@
   "author": "Auth0",
   "license": "MIT",
   "scripts": {
-    "start": "node hasBeenHacked-api.js | node contacts-api.js | node calendar-api.js | node ./bin/www",
+    "start": "node ./bin/www",
     "start_apis_only": "node hasBeenHacked-api.js"
   },
   "dependencies": {
