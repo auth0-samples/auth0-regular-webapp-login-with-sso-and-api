@@ -16,7 +16,7 @@ const handleDelivery = (res, url, accessToken) => {
   request(options, function (error, response, body) {
     if (error) {
       console.error(error);
-      return res.json({ error: true, description: 'Check server logs & whether API Ports already in use' });
+      return res.json({ error: true, description: 'Check server logs & whether API Ports already in use' , error: error});
     }
     res.json(body);
   });
