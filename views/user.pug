@@ -9,8 +9,6 @@ block content
       div
         button(id="check-session") Check Session
         button(id="get-profile") Get Profile
-        button(id="get-contacts") List Contacts
-        button(id="get-appointments") List Appointments
         button(id="check-hack") Check Hack
         button(id="am-i-secure") Am I Secure?
         div(id="results")
@@ -31,28 +29,6 @@ block content
       e.preventDefault();
       $.ajax({
         url: "#{process.env.HOST}#{process.env.LOCAL_PORT}/api/userinfo",
-        method: "GET",
-        success: function (data) {
-          $('#results pre').text(JSON.stringify(data, null, 2))
-        }
-      });
-    });
-
-    $('#get-appointments').on('click', function(e) {
-      e.preventDefault();
-      $.ajax({
-        url: "#{process.env.HOST}#{process.env.LOCAL_PORT}/api/appointments",
-        method: "GET",
-        success: function (data) {
-          $('#results pre').text(JSON.stringify(data, null, 2))
-        }
-      });
-    });
-
-    $('#get-contacts').on('click', function(e) {
-      e.preventDefault();
-      $.ajax({
-        url: "#{process.env.HOST}#{process.env.LOCAL_PORT}/api/contacts",
         method: "GET",
         success: function (data) {
           $('#results pre').text(JSON.stringify(data, null, 2))

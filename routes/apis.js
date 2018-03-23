@@ -53,16 +53,6 @@ router.get('/userinfo', ensureLoggedIn('/auth'), ensureTokenValid, function (req
   handleDelivery(res, url, req.session.access_token);
 });
 
-router.get('/appointments', ensureLoggedIn('/auth'), ensureTokenValid, function (req, res, next) {
-  const url = `${process.env.API_HOST_CALENDAR}/api/appointments`;
-  handleDelivery(res, url, req.session.access_token);
-});
-
-router.get('/contacts', ensureLoggedIn('/auth'), ensureTokenValid, function (req, res, next) {
-  const url = `${process.env.API_HOST_CONTACTS}/api/contacts`;
-  handleDelivery(res, url, req.session.access_token);
-});
-
 router.get('/hasBeenHacked', ensureLoggedIn('/auth'), ensureTokenValid, function (req, res, next) {
    const url = `${process.env.API_HOST}/api/hasBeenHacked`;
   console.log(url);
