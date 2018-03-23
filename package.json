@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node hasBeenHacked-api.js | node contacts-api.js | node calendar-api.js | node ./bin/www",
-    "start_apis_only": "node contacts-api.js | node calendar-api.js"
+    "start_apis_only": "node hasBeenHacked-api.js"
   },
   "dependencies": {
     "auth0-api-jwt-rsa-validation": "0.0.1",

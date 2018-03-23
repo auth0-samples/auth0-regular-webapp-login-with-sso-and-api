@@ -6,7 +6,8 @@ const cors = require('cors');
 
 require('dotenv').config();
 
-const port = process.env.HAS_BEEN_HACKED_API_PORT;
+//const port = 3003;
+const port = process.env.PORT;
 const domain = process.env.AUTH0_DOMAIN;
 
 app.use(cors());

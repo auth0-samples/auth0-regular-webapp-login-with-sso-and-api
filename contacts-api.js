@@ -6,7 +6,7 @@ const cors = require('cors');
 
 require('dotenv').config();
 
-const port = process.env.CONTACTS_API_PORT;
+const port = 3002;
 const domain = process.env.AUTH0_DOMAIN;
 
 app.use(cors());
@@ -56,5 +56,5 @@ app.get('/api/contacts', function (req, res) {
 });
 
 app.listen(port, function () {
-  console.log('Contacts API started on port: ' + port);
+  console.log('hasBeenHacked API started on port: ' + port);
 });

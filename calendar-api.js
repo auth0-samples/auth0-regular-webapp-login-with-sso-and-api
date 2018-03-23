@@ -6,7 +6,7 @@ const cors = require('cors');
 
 require('dotenv').config();
 
-const port = process.env.CALENDAR_API_PORT;
+const port = 3001;
 const domain = process.env.AUTH0_DOMAIN;
 
 app.use(cors());
@@ -54,5 +54,5 @@ app.get('/api/appointments', function (req, res) {
 });
 
 app.listen(port, function () {
-  console.log('Calendar API started on port: ' + port);
+  console.log('hasBeenHacked API started on port: ' + port);
 });

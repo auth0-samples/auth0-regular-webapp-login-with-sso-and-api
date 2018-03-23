@@ -54,17 +54,18 @@ router.get('/userinfo', ensureLoggedIn('/auth'), ensureTokenValid, function (req
 });
 
 router.get('/appointments', ensureLoggedIn('/auth'), ensureTokenValid, function (req, res, next) {
-  const url = `${process.env.HOST}:${process.env.CALENDAR_API_PORT}/api/appointments`;
+  const url = `${process.env.API_HOST_CALENDAR}/api/appointments`;
   handleDelivery(res, url, req.session.access_token);
 });
 
 router.get('/contacts', ensureLoggedIn('/auth'), ensureTokenValid, function (req, res, next) {
-  const url = `${process.env.HOST}:${process.env.CONTACTS_API_PORT}/api/contacts`;
+  const url = `${process.env.API_HOST_CONTACTS}/api/contacts`;
   handleDelivery(res, url, req.session.access_token);
 });
 
 router.get('/hasBeenHacked', ensureLoggedIn('/auth'), ensureTokenValid, function (req, res, next) {
-  const url = `${process.env.HOST}:${process.env.HAS_BEEN_HACKED_API_PORT}/api/hasBeenHacked`;
+   const url = `${process.env.HOST}:${process.env.PORT}/api/hasBeenHacked`;
+  console.log(url);
   handleDelivery(res, url, req.session.access_token);
 });
 
