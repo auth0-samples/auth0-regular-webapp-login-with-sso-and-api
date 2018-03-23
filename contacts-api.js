@@ -6,7 +6,7 @@ const cors = require('cors');
 
 require('dotenv').config();
 
-const port = 3002;
+const port = process.env.PORT || 3002;
 const domain = process.env.AUTH0_DOMAIN;
 
 app.use(cors());
