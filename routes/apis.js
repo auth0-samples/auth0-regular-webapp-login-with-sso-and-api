@@ -64,7 +64,7 @@ router.get('/contacts', ensureLoggedIn('/auth'), ensureTokenValid, function (req
 });
 
 router.get('/hasBeenHacked', ensureLoggedIn('/auth'), ensureTokenValid, function (req, res, next) {
-   const url = `${process.env.API_HOST}${process.env.PORT}/api/hasBeenHacked`;
+   const url = `${process.env.API_HOST}/api/hasBeenHacked`;
   console.log(url);
   handleDelivery(res, url, req.session.access_token);
 });
