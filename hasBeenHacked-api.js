@@ -3,11 +3,21 @@ const app = express();
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
 const cors = require('cors');
+const ManagementClient = require('auth0').ManagementClient;
 
 require('dotenv').config();
 
-const port = process.env.CALENDAR_API_PORT;
+//const port = 3003;
+const port = process.env.PORT || 3003;
 const domain = process.env.AUTH0_DOMAIN;
+
+var auth0 = new ManagementClient({
+  domain: process.env.AUTH0_DOMAIN,
+  clientId: process.env.API_CLIENT_ID,
+  clientSecret: process.env.API_CLIENT_SECRET,
+  scope: process.env.API_SCOPES
+});
+
 
 app.use(cors());
 
@@ -21,17 +31,18 @@ app.use(jwt({
     jwksRequestsPerMinute: 5,
     jwksUri: `https://${domain}/.well-known/jwks.json`
   }),
+
   // Validate the audience and the issuer
-  audience: 'organise',
+  audience: 'jwlm_services',
   issuer: `https://${domain}/`,
   algorithms: [ 'RS256' ]
 }));
 
-// middleware to check scopes
+// Middleware to check scopes
 const checkPermissions = function (req, res, next) {
   switch (req.path) {
-    case '/api/appointments': {
-      var permissions = ['read:calendar'];
+    case '/api/hasBeenHacked': {
+      var permissions = ['read:hasBeenHacked'];
       for (var i = 0; i < permissions.length; i++) {
         if (req.user.scope.includes(permissions[i])) {
           next();
@@ -46,13 +57,28 @@ const checkPermissions = function (req, res, next) {
 
 app.use(checkPermissions);
 
-app.get('/api/appointments', function (req, res) {
-  res.send({ appointments: [
-    { title: '1 on 1', time: 'Fri July 20 2018 14:30:00 GMT-0500 (EST)' },
-    { title: 'All Hands', time: 'Mon July 23 2018 14:23:20 GMT-0500 (EST)' }
-  ] });
+
+app.get('/api/hasBeenHacked', function (req, res) {
+
+  var params = {
+    id: req.user.sub
+  };
+  var metadata = {
+    checkForHack: true
+  }
+
+  auth0.users.updateAppMetadata(params, metadata, function(err, user) {
+    if (err) {
+    console.log('Could be your scopes!');
+    }
+    //Updated user
+    console.log(req.user.sub);
+  });
+
+  res.setHeader('Content-Type', 'application/json');
+  res.send({hasBeenHacked: 'service is ON', metadata});
 });
 
 app.listen(port, function () {
-  console.log('Calendar API started on port: ' + port);
+  console.log('hasBeenHacked API started on port: ' + port);
 });

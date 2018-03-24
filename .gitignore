@@ -3,3 +3,6 @@ node_modules/
 .idea
 tags
 npm-debug.log
+.env.example
+.env.example
+Procfile

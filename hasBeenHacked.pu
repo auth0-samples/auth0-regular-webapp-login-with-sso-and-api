@@ -1,0 +1,64 @@
+@startuml
+
+actor User
+participant Browser
+participant ClientWebApp
+participant Auth0
+participant SocialSignIn
+participant HaveIBeenPwned
+database Auth0_DB
+
+autonumber
+
+group Auth0 hasBeenHacked Service\nHigh-level Design
+
+User -> Browser: Click Sign In
+activate ClientWebApp
+Browser -> ClientWebApp: Sign In Request
+ClientWebApp -> Auth0: Sign In Redirect
+deactivate ClientWebApp
+activate Auth0
+Auth0 -> Browser: Sign In UI
+User -> Browser: Enter Sign In Credentials
+Browser -> Auth0: Credentials via HTTPS
+
+activate Auth0_DB
+Auth0 -> Auth0_DB: Validate Credentials
+
+alt successful case
+
+Auth0_DB -> Auth0: Credentials OK!
+Auth0 -> Browser: host/callback
+deactivate Auth0
+Browser -> ClientWebApp: host/callback
+activate ClientWebApp
+ClientWebApp -> Browser: Signed In UI
+User -> Browser: Click 'Check Hack'
+Browser -> ClientWebApp: check-hack()
+ClientWebApp -> HaveIBeenPwned: api/breachedaccounts/#req.user.emails
+activate HaveIBeenPwned
+HaveIBeenPwned -> HaveIBeenPwned: lookup(req.user.emails)
+HaveIBeenPwned -> ClientWebApp: response: 200/304\nJSON{breachedaccounts}
+deactivate HaveIBeenPwned
+ClientWebApp -> Browser: JSON{breachedaccounts}
+ClientWebApp -> ClientWebApp: hasBeenHacked-api
+ClientWebApp -> Auth0: /api/v2/users/:id\n{app_metadata:{hasBeenHacked:boolean}}
+activate Auth0
+Auth0 -> ClientWebApp: response: 200\nJSON{userprofile}
+Auth0 -> Auth0_DB: store {app_metadata:{hasBeenHacked:boolean}}
+Auth0_DB -> Auth0_DB: stored
+deactivate ClientWebApp
+deactivate Auth0
+
+else unsuccessful case
+
+Auth0_DB -> Auth0: Credentials FAIL!
+deactivate Auth0_DB
+activate Auth0
+Auth0 -> Browser: Re-enter Credentials UI
+deactivate Auth0
+end
+
+end
+
+@enduml

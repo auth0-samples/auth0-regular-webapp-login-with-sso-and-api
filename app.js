@@ -21,7 +21,7 @@ const strategy = new Auth0Strategy({
   domain: process.env.AUTH0_DOMAIN,
   clientID: process.env.AUTH0_CLIENT_ID,
   clientSecret: process.env.AUTH0_CLIENT_SECRET,
-  callbackURL: process.env.AUTH0_CALLBACK_URL || 'http://app1.com:3000/callback',
+  callbackURL: process.env.AUTH0_CALLBACK_URL || 'http://jwlm.com:3000/callback',
   passReqToCallback: true
 }, function (req, access_token, refresh_token, extraParams, profile, done) {
   // This callback is invoked event after authorize call originating

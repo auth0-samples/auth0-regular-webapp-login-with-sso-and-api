@@ -3,21 +3,21 @@ extends layout
 block content
   br
   .w3-container
-    .w3-card-4.w3-center(style="padding: 15px;")
+    .w3-card-4.w3-center.w3-white(style="padding: 50px;")
       img(src=user.picture)
       p Welcome #{user.nickname}
       div
         button(id="check-session") Check Session
         button(id="get-profile") Get Profile
-        button(id="get-contacts") List Contacts
-        button(id="get-appointments") List Appointments
+        button(id="check-hack") Check Hack
+        button(id="am-i-secure") Am I Secure?
         div(id="results")
           pre
   script.
 
     $('#check-session').on('click', function(e) {
       e.preventDefault();
-      window.location = "http://app1.com:3000/api/session";
+      window.location = "#{process.env.HOST}#{process.env.LOCAL_PORT}/api/session";
     });
 
     setInterval(function() {
@@ -28,7 +28,7 @@ block content
     $('#get-profile').on('click', function(e) {
       e.preventDefault();
       $.ajax({
-        url: "http://app1.com:3000/api/userinfo",
+        url: "#{process.env.HOST}#{process.env.LOCAL_PORT}/api/userinfo",
         method: "GET",
         success: function (data) {
           $('#results pre').text(JSON.stringify(data, null, 2))
@@ -36,21 +36,21 @@ block content
       });
     });
 
-    $('#get-appointments').on('click', function(e) {
+    $('#check-hack').on('click', function(e) {
       e.preventDefault();
       $.ajax({
-        url: "http://app1.com:3000/api/appointments",
+        url: "#{process.env.HOST}#{process.env.LOCAL_PORT}/api/check_hack",
         method: "GET",
         success: function (data) {
           $('#results pre').text(JSON.stringify(data, null, 2))
         }
       });
     });
-
-    $('#get-contacts').on('click', function(e) {
+    
+    $('#am-i-secure').on('click', function(e) {
       e.preventDefault();
       $.ajax({
-        url: "http://app1.com:3000/api/contacts",
+        url: "#{process.env.HOST}#{process.env.LOCAL_PORT}/api/hasBeenHacked",
         method: "GET",
         success: function (data) {
           $('#results pre').text(JSON.stringify(data, null, 2))

@@ -1,15 +1,17 @@
 {
-  "name": "auth0-regular-webapp-login-with-sso-and-api",
+  "name": "auth0-with-a-demonstration-back-end-api",
   "version": "1.0.0",
   "description": "Regular webapp with embedded and centralised login & multiple APIs in Auth0. Uses Lock v11, and Auth0.js v9",
-  "repository": "git://github.com/auth0-samples/auth0-regular-webapp-embedded-login-with-sso-and-api",
+  "repository": "",
   "author": "Auth0",
   "license": "MIT",
   "scripts": {
-    "start": "node contacts-api.js | node calendar-api.js | node ./bin/www",
-    "start_apis_only": "node contacts-api.js | node calendar-api.js"
+    "start": "node ./bin/www",
+    "start_apis_only": "node hasBeenHacked-api.js",
+    "start_local": "node hasBeenHacked-api.js | node ./bin/www"
   },
   "dependencies": {
+    "auth0": "^2.9.1",
     "auth0-api-jwt-rsa-validation": "0.0.1",
     "body-parser": "^1.16.1",
     "connect-ensure-login": "^0.1.1",
@@ -24,9 +26,11 @@
     "jwks-rsa": "^1.1.1",
     "jwt-decode": "^2.2.0",
     "morgan": "^1.8.1",
+    "npm": "^5.8.0",
     "passport": "^0.3.0",
     "passport-auth0": "^0.6.0",
     "pug": "~2.0.0-beta11",
+    "restler": "^3.4.0",
     "serve-favicon": "^2.4.0",
     "uuid": "^3.1.0"
   }
