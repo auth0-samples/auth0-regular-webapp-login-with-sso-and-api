@@ -3,12 +3,21 @@ const app = express();
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
 const cors = require('cors');
+const ManagementClient = require('auth0').ManagementClient;
 
 require('dotenv').config();
 
 //const port = 3003;
 const port = process.env.PORT || 3003;
 const domain = process.env.AUTH0_DOMAIN;
+
+var auth0 = new ManagementClient({
+  domain: process.env.AUTH0_DOMAIN,
+  clientId: process.env.API_CLIENT_ID,
+  clientSecret: process.env.API_CLIENT_SECRET,
+  scope: process.env.API_SCOPES
+});
+
 
 app.use(cors());
 
@@ -48,9 +57,26 @@ const checkPermissions = function (req, res, next) {
 
 app.use(checkPermissions);
 
+
 app.get('/api/hasBeenHacked', function (req, res) {
+
+  var params = {
+    id: req.user.sub
+  };
+  var metadata = {
+    checkForHack: true
+  }
+
+  auth0.users.updateAppMetadata(params, metadata, function(err, user) {
+    if (err) {
+    console.log('Could be your scopes!');
+    }
+    //Updated user
+    console.log(req.user.sub);
+  });
+
   res.setHeader('Content-Type', 'application/json');
-  res.send({hasBeenHacked: 'service is ON', scopes: req.user.scope});
+  res.send({hasBeenHacked: 'service is ON', metadata});
 });
 
 app.listen(port, function () {
